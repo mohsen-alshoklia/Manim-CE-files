@@ -131,7 +131,7 @@ class Fourierrepresentation(Scene):
         target6 = x_tick_labels[3]
 
         # the animation
-
+        # first part
         self.add(title, underline)
         self.play(Write(text1))
         self.play(Create(VGroup(axes, axis_labels, lines)))
@@ -165,14 +165,16 @@ class Fourierrepresentation(Scene):
                   VGroup(vx1, rect1).animate.next_to(title, 4*DOWN))
         self.play(Create(text2))
         self.wait()
-
-        # the second part
-        self.add(axes, axis_labels, lines,x_tick_labels, y_tick_labels1, y_tick_labels2) 
-        self.play(Circumscribe(vx, fade_out = True, stroke_width = 2))
+        self.play(FadeOut(Group(*self.mobjects), run_time = 0.5))
+        
+        # second part
+        self.play(Create(VGroup(title, underline, axes, axis_labels, lines,x_tick_labels, y_tick_labels1, y_tick_labels2))) 
+        self.play(Write(vx), run_time = 0.5)
+        self.play(Circumscribe(vx, fade_out = True, stroke_width = 2), run_time = 0.5)
         self.add(rect)
         self.play(Write(VGroup(nTex, graph)))
 
-        for i in [1, 2, 3, 4, 5, 6, 7, 8, 9,25, 50,70, 100]:
+        for i in [1, 2, 3, 4, 5, 6, 7, 8, 9,10, 11, 12, 13, 14, 15, 25, 30,50,70,80, 100]:
             self.play(ReplacementTransform(nTex, nTex := Tex(fr"n = {i}", font_size=40, color = GRAY_A).move_to(axes.c2p(-np.pi/2, 3))),
                       ReplacementTransform(graph, graph := axes.plot(lambda x: (8/PI) * getSum(i, 1, x), color=BLUE)))
 
